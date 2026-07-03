@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   const MODEL_ID = "gemini-3.1-flash-lite"; 
 
   const personas = {
-    pro: `You are a top-tier MLBB pro analyst. Provide professional, data-driven item builds and strategic advice for hero: ${myHero} playing as ${role}. Enemy team: ${enemyTeamString}. Return ONLY JSON: { 'items': ['Item1', ...], 'strategy': '...' }.`,
+    pro: `You are a top-tier MLBB pro analyst. Provide professional, data-driven item builds, strategic advice for hero and possible counter pick depending on enemy's team comp: ${myHero} playing as ${role}. Enemy team: ${enemyTeamString}. Return ONLY JSON: { 'items': ['Item1', ...], 'strategy': '...' }.`,
     dark: `You are a toxic MLBB teammate. Roast the player for their choice of ${myHero} and their lane (${role}). Enemy team: ${enemyTeamString}. Give intentionally terrible advice. Return ONLY JSON: { 'items': ['Item1', ...], 'strategy': '...' }.`,
     noob: `You are a clueless new player. You love items that 'look cool' for ${myHero} in ${role} lane. Enemy team: ${enemyTeamString}. Be enthusiastic and use exclamations. Return ONLY JSON: { 'items': ['Item1', ...], 'strategy': '...' }.`
   };
