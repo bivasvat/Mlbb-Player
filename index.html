@@ -19,6 +19,10 @@
   
   <br><br>
   <textarea id="enemyTeamInput" placeholder="Enemy Team (e.g. Tigreal, Gusion, Saber, Layla, Estes)" rows="3" style="width: 100%;"></textarea>
+<br><br>
+<select id="heroSelector">
+    <option value="">Select a Hero</option>
+</select>
   
   <br><br>
   <select id="modeSelector">
@@ -32,7 +36,12 @@
 
   <script>
     const heroList = ["Aamon", "Akai", "Aldous", "Alice", "Alpha", "Alucard", "Angela", "Argus", "Arlott", "Atlas", "Aulus", "Aurora", "Badang", "Balmond", "Bane", "Barats", "Baxia", "Beatrix", "Belerick", "Benedetta", "Benny", "Bert", "Brody", "Bruno", "Cici", "Carmilla", "Cecilion", "Chang'e", "Chip", "Chou", "Clint", "Cyclops", "Diggie", "Dyrroth", "Edith", "Esmeralda", "Estes", "Eudora", "Fanny", "Faramis", "Floryn", "Franco", "Fredrinn", "Freya", "Gatotkaca", "Gloo", "Gord", "Granger", "Grock", "Guinevere", "Gusion", "Hanabi", "Hanzo", "Harith", "Harley", "Hayabusa", "Helcurt", "Hilda", "Hylos", "Irithel", "Ixia", "Jawhead", "Johnson", "Joy", "Julian", "Kadita", "Kagura", "Kaja", "Karina", "Karrie", "Khalid", "Kimmy", "Kufra", "Lancelot", "Lapu-Lapu", "Layla", "Leomord", "Lesley", "Ling", "Lolita", "Lunox", "Luo Yi", "Lylia", "Martis", "Masha", "Mathilda", "Melissa", "Minotaur", "Minsitthar", "Miya", "Moniyan", "Nana", "Natalia", "Nathan", "Nolan", "Novaria", "Odette", "Orion", "Paquito", "Pharsa", "Phoveus", "Popol and Kupa", "Rafaela", "Roger", "Ruby", "Saber", "Selena", "Silvanna", "Sun", "Terizla", "Thamuz", "Tigreal", "Valentina", "Valir", "Vexana", "Wanwan", "X.Borg", "Xavier", "Yi Sun-Shin", "Yin", "Yu Zhong", "Yve", "Zhask", "Zilong"];
+const selectElement = document.getElementById('heroSelector');
 
+// Generate HTML options and inject them into the select element
+selectElement.innerHTML += heroList
+  .map(hero => `<option value="${hero}">${hero}</option>`)
+  .join('');
     async function getAdvice() {
       const res = await fetch('/api/mlbb-analyst', {
         method: 'POST',
