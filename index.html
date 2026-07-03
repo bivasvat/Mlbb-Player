@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MLBB Analyst</title>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+  <h1>MLBB Hero Analyst</h1>
+  
+  <input id="myHero" placeholder="Your Hero (e.g. Gusion)">
+  <input id="enemyInput" placeholder="Add Enemy Hero">
+  <button onclick="addEnemy()">Add Enemy</button>
+  
+  <select id="modeSelector">
+    <option value="pro">Pro Player</option>
+    <option value="dark">Dark System</option>
+    <option value="noob">Noob</option>
+  </select>
+
+  <ul id="enemyList"></ul>
+  <button onclick="getAdvice()">Get Advice</button>
+  <div id="result"></div>
+
+  <script>
+    let enemies = [];
+    function addEnemy() {
+      const hero = document.getElementById('enemyInput').value;
+      enemies.push(hero);
+      document.getElementById('enemyList').innerHTML += `<li>${hero}</li>`;
+      document.getElementById('enemyInput').value = '';
+    }
+
+    async function getAdvice() {
+      const res = await fetch('/api/mlbb-analyst', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+            myHero: document.getElementById('myHero').value,
+            enemyTeam: enemies, 
+            mode: document.getElementById('modeSelector').value 
+        })
+      });
+      const data = await res.json();
+      document.getElementById('result').innerHTML = `<h3>Items:</h3> ${data.items.join(', ')}<br><h3>Strategy:</h3> ${data.strategy}`;
+    }
+    
+    // Register Service Worker
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js');
+  </script>
+</body>
+</html>
