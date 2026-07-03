@@ -17,11 +17,16 @@
     <option value="Roam">Roam</option>
   </select>
   
-  <br><br>
-  <textarea id="enemyTeamInput" placeholder="Enemy Team (e.g. Tigreal, Gusion, Saber, Layla, Estes)" rows="3" style="width: 100%;"></textarea>
 <br><br>
+<!-- Dropdown for selecting a hero -->
 <select id="heroSelector">
     <option value="">Select a Hero</option>
+</select>
+<!-- Button to add the selected hero to the enemy team list -->
+<button onclick="addEnemy()">Add Enemy</button>
+
+<!-- Container to show selected enemy heroes -->
+<div id="enemyTeamList" style="margin-top: 10px; font-weight: bold;"></div>
 </select>
   
   <br><br>
