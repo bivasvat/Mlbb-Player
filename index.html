@@ -3,32 +3,35 @@
 <head>
   <title>MLBB Analyst</title>
   <link rel="manifest" href="/manifest.json">
+  <style>body { font-family: sans-serif; padding: 20px; }</style>
 </head>
 <body>
-  <h1>MLBB Hero Analyst</h1>
+  <h1>MLBB Analyst</h1>
   
-  <input id="myHero" placeholder="Your Hero (e.g. Gusion)">
-  <input id="enemyInput" placeholder="Add Enemy Hero">
-  <button onclick="addEnemy()">Add Enemy</button>
+  <input id="myHero" placeholder="Your Hero (e.g. Clint)">
+  <select id="roleSelector">
+    <option value="Gold Lane">Gold Lane</option>
+    <option value="Jungle">Jungle</option>
+    <option value="Mid Lane">Mid Lane</option>
+    <option value="EXP Lane">EXP Lane</option>
+    <option value="Roam">Roam</option>
+  </select>
   
+  <br><br>
+  <textarea id="enemyTeamInput" placeholder="Enemy Team (e.g. Tigreal, Gusion, Saber, Layla, Estes)" rows="3" style="width: 100%;"></textarea>
+  
+  <br><br>
   <select id="modeSelector">
     <option value="pro">Pro Player</option>
     <option value="dark">Dark System</option>
     <option value="noob">Noob</option>
   </select>
-
-  <ul id="enemyList"></ul>
+  
   <button onclick="getAdvice()">Get Advice</button>
   <div id="result"></div>
 
   <script>
-    let enemies = [];
-    function addEnemy() {
-      const hero = document.getElementById('enemyInput').value;
-      enemies.push(hero);
-      document.getElementById('enemyList').innerHTML += `<li>${hero}</li>`;
-      document.getElementById('enemyInput').value = '';
-    }
+    const heroList = ["Aamon", "Akai", "Aldous", "Alice", "Alpha", "Alucard", "Angela", "Argus", "Arlott", "Atlas", "Aulus", "Aurora", "Badang", "Balmond", "Bane", "Barats", "Baxia", "Beatrix", "Belerick", "Benedetta", "Benny", "Bert", "Brody", "Bruno", "Cici", "Carmilla", "Cecilion", "Chang'e", "Chip", "Chou", "Clint", "Cyclops", "Diggie", "Dyrroth", "Edith", "Esmeralda", "Estes", "Eudora", "Fanny", "Faramis", "Floryn", "Franco", "Fredrinn", "Freya", "Gatotkaca", "Gloo", "Gord", "Granger", "Grock", "Guinevere", "Gusion", "Hanabi", "Hanzo", "Harith", "Harley", "Hayabusa", "Helcurt", "Hilda", "Hylos", "Irithel", "Ixia", "Jawhead", "Johnson", "Joy", "Julian", "Kadita", "Kagura", "Kaja", "Karina", "Karrie", "Khalid", "Kimmy", "Kufra", "Lancelot", "Lapu-Lapu", "Layla", "Leomord", "Lesley", "Ling", "Lolita", "Lunox", "Luo Yi", "Lylia", "Martis", "Masha", "Mathilda", "Melissa", "Minotaur", "Minsitthar", "Miya", "Moniyan", "Nana", "Natalia", "Nathan", "Nolan", "Novaria", "Odette", "Orion", "Paquito", "Pharsa", "Phoveus", "Popol and Kupa", "Rafaela", "Roger", "Ruby", "Saber", "Selena", "Silvanna", "Sun", "Terizla", "Thamuz", "Tigreal", "Valentina", "Valir", "Vexana", "Wanwan", "X.Borg", "Xavier", "Yi Sun-Shin", "Yin", "Yu Zhong", "Yve", "Zhask", "Zilong"];
 
     async function getAdvice() {
       const res = await fetch('/api/mlbb-analyst', {
@@ -36,16 +39,14 @@
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ 
             myHero: document.getElementById('myHero').value,
-            enemyTeam: enemies, 
+            role: document.getElementById('roleSelector').value,
+            enemyTeamString: document.getElementById('enemyTeamInput').value, 
             mode: document.getElementById('modeSelector').value 
         })
       });
       const data = await res.json();
       document.getElementById('result').innerHTML = `<h3>Items:</h3> ${data.items.join(', ')}<br><h3>Strategy:</h3> ${data.strategy}`;
     }
-    
-    // Register Service Worker
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js');
   </script>
 </body>
 </html>
